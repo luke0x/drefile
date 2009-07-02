@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+HOME_DIRECTORY = "/Users/luke"
+
+DESKTOP_DIRECTORY = "#{HOME_DIRECTORY}/Desktop"
+STORAGE_DIRECTORY = "#{HOME_DIRECTORY}/Documents"
+LOG_DIRECTORY = "#{HOME_DIRECTORY}/.bin"
+SHELL = "/bin/bash"
+
+require 'rubygems'
+require 'open4'
+require 'logger'
+require "fileutils"
+require 'time'
+
+if ARGV.length == 0
+  # make the drefile dir
+  month_and_day = Time.now.strftime("%Y-%m-%B/%d-%A")
+  drefile_directory = "#{STORAGE_DIRECTORY}/#{month_and_day}"
+  FileUtils.mkdir_p(drefile_directory)
+  timestamp_prefix = Time.now.strftime("%Y%m%d.%H%M")
+
+  # remove the today alias
+  FileUtils.rm("#{DESKTOP_DIRECTORY}/Today") if File.exists?("#{DESKTOP_DIRECTORY}/Today")
+
+  # move files with a datetime prefix
+  Dir.entries(DESKTOP_DIRECTORY).reject{|f| f =~ /^\./}.each do |file_name|
+    FileUtils.mv("#{DESKTOP_DIRECTORY}/#{file_name}", "#{drefile_directory}/#{timestamp_prefix} #{file_name}")
+  end
+
+  # remake the today alias
+  `/opt/local/bin/mkalias -r "#{drefile_directory}" "#{HOME_DIRECTORY}/Desktop/Today"`
+else
+  # make the drefile dir
+  timestamp = Time.parse(Open4.open4("mdls -name kMDItemFSCreationDate -raw #{ARGV.first}")[2].read)
+  drefile_directory = "#{STORAGE_DIRECTORY}/#{timestamp.strftime("%Y-%m-%B/%d-%A")}"
+  FileUtils.mkdir_p(drefile_directory)
+
+  new_file = "#{drefile_directory}/#{timestamp.strftime("%Y%m%d.%H%M")} #{ARGV.first}"
+  FileUtils.mv(ARGV.first, new_file)
+  puts new_file
+end

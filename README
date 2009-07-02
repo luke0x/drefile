@@ -1,0 +1,29 @@
+drefile: an automatic, chronological file organizer
+---------------------------------------------------
+Every few minutes drefile copies all files on your Desktop to a folder
+such as ~/Documents/2009-06-June/26-Friday, prepending a timestamp
+(like 20090626.1310) to the filename.
+
+Use
+---
+1. Put files on your Desktop, and in a few minutes they will be 'drefiled'
+2. Use the 'Today' alias on your Desktop to go to today's folder
+3. Type 'dday' to go to today's directory
+4. Type 'dmonth' to go to this month's directory
+5. Type 'drefile file' to manually timestamp + move a file
+
+Install
+-------
+1. sudo port install osxutils (requires mkalias)
+2. sudo gem install open4
+3. copy the 3 files below to ~/.bin (or whatever, in the path)
+4. chmod +x the 3 files
+5. crontab -e this (runs every 5 minutes):
+  0,5,10,15,20,25,30,35,40,45,50,55 * * * * /HOME_DIRECTORY/.bin/drefile >> /HOME_DIRECTORY/.bin/drefile_cron.log
+6. add to ~/.profile:
+  dday(){
+    eval $(~/.bin/dday.rb)
+  }
+  dmonth(){
+    eval $(~/.bin/dmonth.rb)
+  }
