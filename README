@@ -14,12 +14,15 @@ Use
 
 Install
 -------
-1. sudo port install osxutils (requires mkalias)
-2. sudo gem install open4
-3. copy the 3 files below to ~/.bin (or whatever, in the path)
-4. chmod +x the 3 files
-5. crontab -e this (runs every 5 minutes):
+1. `sudo port install osxutils` # requires mkalias
+2. `sudo gem install open4`
+3. copy the 3 files in /bin to ~/.bin (or whatever, in the path)
+4. `chmod +x` the 3 files
+5. `crontab -e` one of these (as your user):
+  # run every 5 minutes on the 5
   0,5,10,15,20,25,30,35,40,45,50,55 * * * * /HOME_DIRECTORY/.bin/drefile >> /HOME_DIRECTORY/.bin/drefile_cron.log
+  # run once/day at 5am
+  * 5 * * * /HOME_DIRECTORY/.bin/drefile >> /HOME_DIRECTORY/.bin/drefile_cron.log
 6. add to ~/.profile:
   dday(){
     eval $(~/.bin/dday.rb)

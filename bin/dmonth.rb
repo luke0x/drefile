@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
+HOME_DIRECTORY = "~"
+
 require "fileutils"
 
 month = Time.now.strftime("%Y-%m-%B")
-dir = "/Users/luke/Documents/#{month}"
+dir = "#{HOME_DIRECTORY}/Documents/#{month}"
 FileUtils.mkdir_p dir
 puts "cd #{dir}"

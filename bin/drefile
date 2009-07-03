@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-HOME_DIRECTORY = "/Users/luke"
+HOME_DIRECTORY = "~"
 
 DESKTOP_DIRECTORY = "#{HOME_DIRECTORY}/Desktop"
 STORAGE_DIRECTORY = "#{HOME_DIRECTORY}/Documents"
