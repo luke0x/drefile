@@ -6,6 +6,7 @@ DESKTOP_DIRECTORY = "#{HOME_DIRECTORY}/Desktop"
 STORAGE_DIRECTORY = "#{HOME_DIRECTORY}/Documents"
 LOG_DIRECTORY = "#{HOME_DIRECTORY}/.bin"
 SHELL = "/bin/bash"
+PATH_TO_MKALIAS = "/usr/local/bin"
 
 require 'rubygems'
 require 'open4'
@@ -29,7 +30,7 @@ if ARGV.length == 0
   end
 
   # remake the today alias
-  `/opt/local/bin/mkalias -r "#{drefile_directory}" "#{HOME_DIRECTORY}/Desktop/Today"`
+  `#{PATH_TO_MKALIAS}/mkalias -r "#{drefile_directory}" "#{HOME_DIRECTORY}/Desktop/Today"`
 else
   # make the drefile dir
   timestamp = Time.parse(Open4.open4("mdls -name kMDItemFSCreationDate -raw #{ARGV.first}")[2].read)
